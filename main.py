@@ -2,10 +2,13 @@ from fastapi import FastAPI
 app = FastAPI()
 from routes.gadgets import router as event_router
 from routes.positionings import router as second_router
+from routes.users import router as users_router
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 app.include_router(event_router, prefix="/gadget")
 app.include_router(second_router, prefix="/positioning")
+app.include_router(users_router, prefix="/users")
+
 
 # html 들이 있는 폴더 위치
 templates = Jinja2Templates(directory="templates/")
