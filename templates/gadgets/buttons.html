@@ -12,8 +12,12 @@
 </head>
 
 <body>
-    <nav class="container"></nav>
+    {% extends "nav_template.html"%}
+    
+    
+
     <main class="container">
+        {% block main_container %}
         <!-- basic button style -->
         <button class="btn">Basic</button>
         <button class="btn btn-primary">Primary</button>
@@ -42,6 +46,7 @@
             <button type="button" class="btn btn-primary">Samsung</button>
             <button type="button" class="btn btn-primary">Sony</button>
         </div>
+        {% endblock %}
     </main>
     <footer class="container"></footer>
     <footer>

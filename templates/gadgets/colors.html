@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +14,11 @@
 </head>
 
 <body>
+    {% extends "nav_template.html"%}
 
     <nav class="container-fluid">nav</nav>
     <main class="container">
+        {% block main_container %}
         <!-- back ground color -->
         <div>
             <div>Background Colors</div>
@@ -62,6 +65,7 @@
             <div class="text-bg-dark">Dark grey background color.</div>
             <div class="text-bg-light">Light grey background color.</div>
         </div>
+        {% endblock %}
     </main>
     <footer class="container-fluid">footer</footer>
     <footer>

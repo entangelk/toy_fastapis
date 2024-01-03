@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +14,14 @@
 </head>
 
 <body>
-    <nav class="container"></nav>
+    {% extends "nav_template.html"%}
+    <nav class="container">
+        
+        
+    </nav>
     <main class="container">
-
+        
+        {% block main_container %}
         <!-- basic card -->
         <div class="card">
             <div class="card-header bg-primary">header</div>
@@ -36,6 +42,7 @@
                 <div class="card-footer bg-info">footer</div>
             </div>
         </div>
+        {% endblock %}
     </main>
     <footer class="container"></footer>
     <footer>

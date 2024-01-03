@@ -12,8 +12,12 @@
 </head>
 
 <body>
+    {% extends "nav_template.html"%}
+
     <nav class="container"></nav>
     <main class="container">
+        {% block main_container %}
+
         <h2>Basic Table</h2>
         <div>The .table class adds basic styling (light padding and horizontal dividers) to a table:</div>
         <table class="table table-bordered table-striped table-hover">
@@ -42,6 +46,7 @@
                 </tr>
             </tbody>
         </table>
+        {% endblock %}
 
     </main>
     <footer class="container"></footer>

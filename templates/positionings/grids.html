@@ -13,9 +13,12 @@
 </head>
 
 <body>
+    {% extends "nav_template.html"%}
 
     <nav class="container-fluid">nav</nav>
     <main class="container">
+{% block main_container %}
+        
         <div class="row">
             <!-- back ground color -->
             <div class="row col-6 g-0">
@@ -64,6 +67,8 @@
             <div class="col-1 text-bg-success">This text indicates success.</div>
             <div class="col-1 text-bg-info">This text represents some information.</div>
         </div>
+{% endblock %}
+
     </main>
     <footer class="container-fluid">footer</footer>
     <footer>
