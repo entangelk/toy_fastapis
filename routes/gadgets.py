@@ -12,8 +12,14 @@ templates = Jinja2Templates(directory="templates/")
 async def buttons(request:Request):
     return templates.TemplateResponse(name="gadgets/buttons.html", context={'request':request})
 
-@router.get("/Cards", response_class=HTMLResponse)
+@router.get("/Cards")
+# request = Request(quer)
 async def Cards(request:Request):
+    return templates.TemplateResponse(name="gadgets/Cards.html", context={'request':request})
+
+@router.post("/Cards")
+async def Cards_post(request:Request):
+    form_datas = await request.form()
     return templates.TemplateResponse(name="gadgets/Cards.html", context={'request':request})
 
 @router.get("/colors", response_class=HTMLResponse)

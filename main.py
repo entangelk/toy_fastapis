@@ -3,11 +3,14 @@ app = FastAPI()
 from routes.gadgets import router as event_router
 from routes.positionings import router as second_router
 from routes.users import router as users_router
+from routes.homes import router as home_router
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
 app.include_router(event_router, prefix="/gadget")
 app.include_router(second_router, prefix="/positioning")
 app.include_router(users_router, prefix="/users")
+app.include_router(home_router, prefix="/home")
+
 
 
 # html 들이 있는 폴더 위치
@@ -24,6 +27,11 @@ app.add_middleware(
 )
 
 @app.get("/")
+async def root(Request:Request):
+    # return {"message": "jisu World"}
+    return templates.TemplateResponse("main.html",{'request':Request})
+
+@app.post("/")
 async def root(Request:Request):
     # return {"message": "jisu World"}
     return templates.TemplateResponse("main.html",{'request':Request})
