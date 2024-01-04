@@ -18,13 +18,14 @@ async def insert(request:Request):
 @router.get("/form", response_class=HTMLResponse) # 펑션 호출 방식
 async def insert(request:Request):
     print(dict(request._query_params))
-    return templates.TemplateResponse(name="users/inserts.html", context={'request':request})
+    return templates.TemplateResponse(name="users/inserts.html", context={'request':request,'first':5, 'second':6})
 
 @router.post("/login", response_class=HTMLResponse) # 펑션 호출 방식
 async def insert(request:Request):
-    await request.form()
-    print(dict(await request.form()))
-    return templates.TemplateResponse(name="users/login.html", context={'request':request})
+    form_data = await request.form()
+    dict_form_data = dict(form_data)
+    print(dict_form_data)
+    return templates.TemplateResponse(name="users/login.html", context={'request':request,'form_data':dict_form_data})
 
 @router.get("/login", response_class=HTMLResponse) # 펑션 호출 방식
 async def insert(request:Request):
@@ -33,6 +34,11 @@ async def insert(request:Request):
 
 # 회원 가입 /users/insert -> users/login.html
 @router.get("/insert") # 펑션 호출 방식
+async def insert(request:Request):
+    print(dict(request._query_params))
+    return templates.TemplateResponse(name="users/login.html", context={'request':request})
+
+@router.post("/insert") # 펑션 호출 방식
 async def insert(request:Request):
     print(dict(request._query_params))
     return templates.TemplateResponse(name="users/login.html", context={'request':request})
@@ -46,8 +52,17 @@ async def list(request:Request):
 
 @router.get("/list") # 펑션 호출 방식
 async def list(request:Request):
+    user_list = [
+    {"id": 1, "name": "김철수", "email": "cheolsu@example.com"},
+    {"id": 2, "name": "이영희", "email": "younghi@example.com"},
+    {"id": 3, "name": "박지성", "email": "jiseong@example.com"},
+    {"id": 4, "name": "김미나", "email": "mina@example.com"},
+    {"id": 5, "name": "장현우", "email": "hyeonwoo@example.com"}
+]
     print(dict(request._query_params))
-    return templates.TemplateResponse(name="users/list.html", context={'request':request})
+    # return templates.TemplateResponse(name="users/list.html", context={'request':request, 'users' : user_list})
+    return templates.TemplateResponse(name="users/list_jinja.html", context={'request':request, 'users' : user_list})
+
 
 # 회원 상세정보 /users/read -> users/reads.html
 # Path parameters : /users/read/id or /users/read/uniqe_name
@@ -81,4 +96,10 @@ async def reads(request:Request, object_id):
     # FormData([('name', 'jisu'), ('email', 'ohjisu320@gmail.com')])
     dict(await request.form())
     # {'name': 'jisu', 'email': 'ohjisu320@gmail.com'}
+'''
+
+'''
+get or post (입력 유무)
+- get : 입력 X, 값을 넘겨야 된다면 path param 
+- post : 입력 O, query params
 '''
