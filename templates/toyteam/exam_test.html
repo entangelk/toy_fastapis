@@ -14,7 +14,10 @@
             <input type="" class="form-control" id="name" placeholder="이름을 입력하세요" name="name">
         </div>
     </div>
-    {% for quest in question %}
+
+    {% for quest in questions %}
+
+    
     <div class="mb-3 mt-3">
     
         문제 {{loop.index1}} : {{quest.question}} 

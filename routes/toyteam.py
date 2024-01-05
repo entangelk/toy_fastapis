@@ -41,4 +41,4 @@ async def forms(request:Request):
     # await collection_user.save(user)
 
     question_list = await collection_toyteam.get_all()
-    return templates.TemplateResponse(name="toyteam/exam_test.html", context={'request':request,'form_data':question_dict})
+    return templates.TemplateResponse(name="toyteam/exam_test.html", context={'request':request,'form_data':question_list})
