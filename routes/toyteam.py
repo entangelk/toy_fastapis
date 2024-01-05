@@ -3,7 +3,7 @@ from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from database.connections import Database
-from models.toyteam import User
+from models.toyteam import question,answer
 
 router = APIRouter()
 
