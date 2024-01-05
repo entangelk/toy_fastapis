@@ -33,3 +33,7 @@ class Database:
         if doc:
             return doc
         return False
+    # 저장
+    async def save(self, document) -> None:
+        await document.create()
+        return None
