@@ -16,3 +16,20 @@ class Settings(BaseSettings):
                           document_models=[User])
     class Config:
         env_file = ".env"
+
+class Database:
+    # model 즉 collection
+    def __init__(self, model) -> None:
+        self.model = model
+        pass
+        # 전체 리스트
+    async def get_all(self):
+        documents = await self.model.find_all().to_list()
+        pass
+        return documents
+    # 상세 보기
+    async def get(self, id:PydanticObjectId) -> Any:
+        doc = await self.model.get(id)
+        if doc:
+            return doc
+        return False

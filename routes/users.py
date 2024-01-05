@@ -61,6 +61,10 @@ async def list(request:Request):
     print(dict(await request.form()))
     return templates.TemplateResponse(name="users/list.html", context={'request':request})
 
+from database.connections import Database
+from models.users import User
+collection_user = Database(User)
+
 @router.get("/list") # 펑션 호출 방식
 async def list(request:Request):
     print(dict(request._query_params))
@@ -72,7 +76,7 @@ async def list(request:Request):
 #     {"id": 5, "name": "장현우", "email": "hyeonwoo@example.com"}
 # ]
     
-    user_list = []
+    user_list = await collection_user.get_all()
     '''
     # insert 작업 진행
     documents = collection.find({})
@@ -87,19 +91,23 @@ async def list(request:Request):
     # return templates.TemplateResponse(name="users/list.html", context={'request':request, 'users' : user_list})
     return templates.TemplateResponse(name="users/list_jinja.html", context={'request':request, 'users' : user_list})
 
+from beanie import PydanticObjectId
 
 # 회원 상세정보 /users/read -> users/reads.html
 # Path parameters : /users/read/id or /users/read/uniqe_name
 @router.get("/read/{object_id}") # 펑션 호출 방식
-async def reads(request:Request, object_id):
+async def reads(request:Request, object_id:PydanticObjectId):
     print(dict(request._query_params))
-    return templates.TemplateResponse(name="users/reads.html", context={'request':request})
+    user = await collection_user.get(object_id)
+    return templates.TemplateResponse(name="users/reads.html", context={'request':request, 'user':user})
 
 @router.post("/read/{object_id}") # 펑션 호출 방식
-async def reads(request:Request, object_id):
+async def reads(request:Request, object_id:PydanticObjectId):
     await request.form()
     print(dict(await request.form()))
-    return templates.TemplateResponse(name="users/reads.html", context={'request':request})
+    user = await collection_user.get(object_id)
+
+    return templates.TemplateResponse(name="users/reads.html", context={'request':request,'user':user})
 
 # form_datas = await request.form()
     # dict(form_datas)
