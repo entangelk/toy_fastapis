@@ -1,6 +1,8 @@
 from typing import Any, List, Optional
 from beanie import init_beanie, PydanticObjectId
 from models.users import User
+from models.toyteam import question,answer
+
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
 # 변경 후 코드
@@ -14,6 +16,10 @@ class Settings(BaseSettings):
         client = AsyncIOMotorClient(self.DATABASE_URL)
         await init_beanie(database=client.get_default_database(),
                           document_models=[User])
+        await init_beanie(database=client.get_default_database(),
+                          document_models=[question])
+        await init_beanie(database=client.get_default_database(),
+                          document_models=[answer])
     class Config:
         env_file = ".env"
 
