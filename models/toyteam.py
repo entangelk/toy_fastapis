@@ -6,8 +6,8 @@ from pydantic import BaseModel, EmailStr
 class question(Document):
     question: Optional[str] = None
     options: Optional[list] = None
-    answer: Optional[str] = None
-    score: Optional[str] = None
+    answer: Optional[int] = None
+    score: Optional[int] = None
   
     class Qustion_Settings:
         name = "toyteam_question"
