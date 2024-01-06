@@ -1,7 +1,10 @@
 ```
 ~$ pip install fastapi uvicorn jinja2
 ~$ pip install python-multipart
-
+~$ pip install beanie
+~$ pip install pydantic
+~$ pip install pydantic-settings
+~$ pip install pydantic[email]
 ```
 
 ### [업무분장]

@@ -3,15 +3,15 @@ from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request
 from database.connections import Database
-from models.toyteam import question,answer
+from models.toyteam import toyteam,input_answer
 from beanie import PydanticObjectId
 
 router = APIRouter()
 
 templates = Jinja2Templates(directory="templates/")
 
-collection_toyteam = Database(question)
-collection_input_answer = Database(answer)
+collection_toyteam = Database(toyteam)
+collection_input_answer = Database(input_answer)
 
 
 # 응시한 애들 값
