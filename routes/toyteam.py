@@ -13,8 +13,17 @@ templates = Jinja2Templates(directory="templates/")
 collection_toyteam = Database(toyteam)
 collection_input_answer = Database(input_answer)
 
+# 문제 리스트
+@router.get("/question_list", response_class=HTMLResponse) # 펑션 호출 방식
+async def forms(request:Request):
+    return templates.TemplateResponse(name="toyteam/question_list.html", context={'request':request})
 
-# 응시한 애들 값
+@router.post("/question_list", response_class=HTMLResponse) # 펑션 호출 방식
+async def forms(request:Request):
+    return templates.TemplateResponse(name="toyteam/question_list.html", context={'request':request})
+
+
+# 응시 결과
 @router.get("/data_list", response_class=HTMLResponse) # 펑션 호출 방식
 async def forms(request:Request):
     dict(request._query_params)
@@ -59,7 +68,7 @@ async def forms(request:Request):
     return templates.TemplateResponse(name="toyteam/data_list.html", context={'request':request,'answers':answer_list,'questions':quest_list})
 
 
-# 문제 페이지
+# 문제 풀기
 @router.get("/exam_test", response_class=HTMLResponse) # 펑션 호출 방식
 async def forms(request:Request):
     dict(request._query_params)
