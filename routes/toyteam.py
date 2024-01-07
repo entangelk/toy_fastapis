@@ -1,3 +1,5 @@
+# made by yohan except 문제리스트
+
 from fastapi import APIRouter
 from starlette.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -30,10 +32,26 @@ async def forms(request:Request):
     
     answer_list = await collection_input_answer.get_all()
     answer_list = [answer.__dict__ for answer in answer_list]
-    for answer in answer_list:
-        answer.pop('id', None)
-        answer.pop('revision_id', None)
-    count=len(answer_list[0])-3
+    try:
+        for answer in answer_list:
+            answer.pop('id', None)
+            answer.pop('revision_id', None)
+        count=len(answer_list[0])-3
+    except:
+        answer_list=[
+            {
+                'name': None,
+                'question1':None,
+                'question2':None,
+                'question3':None,
+                'question4':None,
+                'question5':None,
+                'count':None,
+                'score':None
+            }
+        ]
+        count = None
+        pass
     return templates.TemplateResponse(name="toyteam/data_list.html", context={'request':request,'answers':answer_list, 'question_counts':count})
 
 @router.post("/data_list", response_class=HTMLResponse) # 펑션 호출 방식
@@ -43,6 +61,7 @@ async def forms(request:Request):
 
 
     quest_list = await collection_toyteam.get_all()
+    quests_list = [answer.dict() for answer in quest_list]
 
 
    
@@ -50,22 +69,44 @@ async def forms(request:Request):
     score = 0
     answer_dict['count'] = correct
     answer_dict['score'] = score
-    for j in range(len(answer_dict)-3):
-        if int(answer_dict[f'question{j+1}']) == dict(quest_list[j])['answer']:
-            correct +=1
-            score += dict(quest_list[j])['score']
-            pass
-        answer_dict['count'] = correct
-        answer_dict['score'] = score
-    pass
-
+    try:
+        for j in range(len(answer_dict)-3):
+            if int(answer_dict[f'question{j+1}']) == dict(quest_list[j])['answer']:
+                correct +=1
+                score += dict(quest_list[j])['score']
+                pass
+            answer_dict['count'] = correct
+            answer_dict['score'] = score
+        pass
+    except:
+        pass
     pass
     answer = input_answer(**answer_dict)
     await collection_input_answer.save(answer)
 
     answer_list = await collection_input_answer.get_all()
-
-    return templates.TemplateResponse(name="toyteam/data_list.html", context={'request':request,'answers':answer_list,'questions':quest_list})
+    answer_list = [answer.__dict__ for answer in answer_list]
+    try:
+        for answer in answer_list:
+            answer.pop('id', None)
+            answer.pop('revision_id', None)
+        count=len(answer_list[0])-3
+    except:
+        answer_list=[
+            {
+                'name': None,
+                'question1':None,
+                'question2':None,
+                'question3':None,
+                'question4':None,
+                'question5':None,
+                'count':None,
+                'score':None
+            }
+        ]
+        count = None
+        pass
+    return templates.TemplateResponse(name="toyteam/data_list.html", context={'request':request,'answers':answer_list,'questions':quests_list, 'question_counts':count})
 
 
 # 문제 풀기
