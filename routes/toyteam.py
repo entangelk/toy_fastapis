@@ -30,6 +30,9 @@ async def forms(request:Request):
 async def forms(request:Request):
     dict(request._query_params)
     
+    quest_list = await collection_toyteam.get_all()
+    quests_list = [answer.dict() for answer in quest_list]
+
     answer_list = await collection_input_answer.get_all()
     answer_list = [answer.__dict__ for answer in answer_list]
     try:
@@ -52,7 +55,7 @@ async def forms(request:Request):
         ]
         count = None
         pass
-    return templates.TemplateResponse(name="toyteam/data_list.html", context={'request':request,'answers':answer_list, 'question_counts':count})
+    return templates.TemplateResponse(name="toyteam/data_list.html", context={'request':request,'answers':answer_list, 'question_counts':count,'questions':quests_list})
 
 @router.post("/data_list", response_class=HTMLResponse) # 펑션 호출 방식
 async def forms(request:Request):
