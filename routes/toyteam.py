@@ -18,11 +18,13 @@ collection_input_answer = Database(input_answer)
 # 문제 리스트
 @router.get("/question_list", response_class=HTMLResponse) # 펑션 호출 방식
 async def forms(request:Request):
-    return templates.TemplateResponse(name="toyteam/question_list.html", context={'request':request})
+    toyteam_list = await collection_toyteam.get_all()
+    return templates.TemplateResponse(name="toyteam/question_list.html", context={'request':request, 'toyteam' : toyteam_list})
 
 @router.post("/question_list", response_class=HTMLResponse) # 펑션 호출 방식
 async def forms(request:Request):
-    return templates.TemplateResponse(name="toyteam/question_list.html", context={'request':request})
+    toyteam_list = await collection_toyteam.get_all()
+    return templates.TemplateResponse(name="toyteam/question_list.html", context={'request':request, 'toyteam' : toyteam_list})
 
 
 # 응시 결과
@@ -116,7 +118,6 @@ async def forms(request:Request):
 @router.get("/exam_test", response_class=HTMLResponse) # 펑션 호출 방식
 async def forms(request:Request):
     dict(request._query_params)
-    
     question_list = await collection_toyteam.get_all()
     return templates.TemplateResponse(name="toyteam/exam_test.html", context={'request':request,'questions' : question_list})
 

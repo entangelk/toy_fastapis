@@ -1,4 +1,27 @@
 {% extends "nav_template.html"%}
 <title>문제 리스트</title>
 {% block main_container %}
+    <div>
+        <h4>a tag</h4>
+        <a href="exam_test.html">link buttons without Parameter</a>
+        <a href="exam_test.html?btn=good&name=button">link buttons with Parameter</a>
+    </div>
+    <div>
+        <h2>form tag with method GET</h2>
+        <div>
+            <h3>link exam_test form without parameters</h3>
+            <form action="exam_test.html" method="get">
+                <button class="btn btn-primary">문제풀기로 연결</button>
+            </form>
+            <h3>link card form with parameters</h3>
+            <form action="exam_test.html" method="get">
+                <!-- <input type="text" name="email" value="kelly.youjin.kim@gmail.com"> -->
+                <button class="btn btn-primary">문제풀기로 연결</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}
+
+<!-- 
+db불러오기
+버튼생성-exam_test 연결 get -->
