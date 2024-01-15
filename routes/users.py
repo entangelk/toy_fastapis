@@ -119,6 +119,32 @@ async def reads(request:Request, object_id:PydanticObjectId):
 # form_datas = await request.form()
     # dict(form_datas)
 
+from typing import Optional
+@router.get("/list_jinja_pagination/{page_number}")
+@router.get("/list_jinja_pagination") # 검색 with pagination
+# http://127.0.0.1:8000/users/list_jinja_pagination?key_name=name&word=김
+# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=
+# http://127.0.0.1:8000/users/list_jinja_pagination/2?key_name=name&word=김
+async def list(request:Request, page_number: Optional[int] = 1):
+    user_dict = dict(request._query_params)
+    print(user_dict)
+    # db.answers.find({'name':{ '$regex': '김' }})
+    # { 'name': { '$regex': user_dict.word } }
+    conditions = { }
+    try :
+        search_word = user_dict["word"]
+    except:
+        search_word = None
+    if search_word:     # 검색어 작성
+        conditions = {user_dict['key_name'] : { '$regex': user_dict["word"] }}
+    
+    user_list, pagination = await collection_user.getsbyconditionswithpagination(conditions
+                                                                     ,page_number)
+    return templates.TemplateResponse(name="/users/list_jinja_paginations.html"
+                                      , context={'request':request
+                                                 , 'users' : user_list
+                                                  ,'pagination' : pagination })
+
 '''
 [GET 방식에서 딕셔너리 형식으로 파라미터를 뽑아오는 과정]
     request._query_params

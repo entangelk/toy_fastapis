@@ -7,6 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
 # 변경 후 코드
 from pydantic_settings import BaseSettings
+from utils.paginations import Paginations
 
 class Settings(BaseSettings):
     # DATABASE_URL: Optional[str] = None
@@ -43,3 +44,19 @@ class Database:
     async def save(self, document) -> None:
         await document.create()
         return None
+    
+    async def getsbyconditions(self, conditions:dict) -> [Any]:
+        documents = await self.model.find(conditions).to_list()  # find({})
+        if documents:
+            return documents
+        return False    
+
+    async def getsbyconditionswithpagination(self
+                                            , conditions:dict, page_number) -> [Any]:
+    # find({})
+        total = await self.model.find(conditions).count()
+        pagination = Paginations(total_records=total, current_page=page_number)
+        documents = await self.model.find(conditions).skip(pagination.start_record_number).limit(pagination.records_per_page).to_list()
+        if documents:
+            return documents, pagination
+        return False    

@@ -39,6 +39,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from fastapi.staticfiles import StaticFiles
+# url 경로, 자원 물리 경로, 프로그래밍 측면
+app.mount("/css", StaticFiles(directory="resources/css/"), name="static_css")
+
 @app.get("/")
 async def root(Request:Request):
     # return {"message": "jisu World"}
