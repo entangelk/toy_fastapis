@@ -14,6 +14,10 @@ from routes.positionings import router as second_router
 from routes.users import router as users_router
 from routes.homes import router as home_router
 from routes.toyteam import router as toy_router
+from routes.events_api import router as event_router
+from routes.users_api import router as users_api_router
+
+
 
 from fastapi import Request
 from fastapi.templating import Jinja2Templates
@@ -22,6 +26,10 @@ app.include_router(second_router, prefix="/positioning")
 app.include_router(users_router, prefix="/users")
 app.include_router(home_router, prefix="/home")
 app.include_router(toy_router, prefix="/toy")
+app.include_router(event_router, prefix="/events")
+app.include_router(users_api_router, prefix="/users_api")
+
+
 
 
 
