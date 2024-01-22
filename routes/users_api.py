@@ -18,6 +18,11 @@ router = APIRouter(
 user_database = Database(User)
 
 # 새로운 레코드 추가
+# http://127.0.0.1:8000/users_api
+'''
+테스트 데이터
+    {"name": "아이유", "email": "iuiu1004@example.com", "pswd": "iuiu1234", "manager": "1", "sellist1": "1", "text": "안녕하세요. 슈퍼스타 아이유입니다."}
+'''
 @router.post("/")
 async def create_user_data(body: User) -> dict:
     document = await user_database.save(body)
@@ -26,9 +31,9 @@ async def create_user_data(body: User) -> dict:
         ,"datas": document
     }
 
-
-
 # id를 기준으로 row 확인
+# http://127.0.0.1:8000/users_api/65ae2499cebf1fbf56f9a2e7/asdflkjh -> 비밀번호 틀림 테스트
+# http://127.0.0.1:8000/users_api/65ae2499cebf1fbf56f9a2e7/iuiu1234 -> 정상 테스트
 @router.get("/{id}/{pswd}", response_model=User)
 async def retrieve_user_data(id: PydanticObjectId, pswd: Optional[str] = None):
     user_data = await user_database.get(id)
@@ -48,6 +53,7 @@ async def retrieve_user_data(id: PydanticObjectId, pswd: Optional[str] = None):
     return user_data
 
 # id에 따른 레코드 삭제
+# http://127.0.0.1:8000/users_api/65ae2499cebf1fbf56f9a2e7/ -> 정상 삭제 테스트
 @router.delete("/{id}")
 async def delete_user(id: PydanticObjectId) -> dict:
     user_data = await user_database.get(id)
@@ -64,7 +70,11 @@ async def delete_user(id: PydanticObjectId) -> dict:
     }
 
 # id로 업데이트
-
+# http://127.0.0.1:8000/users_api/65ae2499cebf1fbf56f9a2e7 -> 정상 테스트
+'''
+테스트 데이터
+    {"name": "아이유", "email": "iuiu1004@example.com", "pswd": "iuiu1234", "manager": "1", "sellist1": "1", "text": "안녕하세요. 슈퍼스타 아이유입니다. 데이터 수정해보겠습니다."}
+'''
 @router.put("/{id}", response_model=User)
 async def update_user_data_withjson(id: PydanticObjectId, request:Request) -> User:
     user_data = await user_database.get(id)
