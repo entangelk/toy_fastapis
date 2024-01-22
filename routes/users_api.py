@@ -19,7 +19,7 @@ user_database = Database(User)
 
 # 새로운 레코드 추가
 @router.post("/")
-async def create_event(body: User) -> dict:
+async def create_user_data(body: User) -> dict:
     document = await user_database.save(body)
     return {
         "message": "user_data created successfully"
@@ -30,7 +30,7 @@ async def create_event(body: User) -> dict:
 
 # id를 기준으로 row 확인
 @router.get("/{id}/{pswd}", response_model=User)
-async def retrieve_event(id: PydanticObjectId, pswd: Optional[str] = None):
+async def retrieve_user_data(id: PydanticObjectId, pswd: Optional[str] = None):
     user_data = await user_database.get(id)
     user_data_dict = dict(user_data)
     
